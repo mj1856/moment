@@ -13,8 +13,8 @@ addFormatToken('x', 0, 0, 'valueOf');
 addRegexToken('x', matchSigned);
 addRegexToken('X', matchTimestamp);
 addParseToken('X', function (input, array, config) {
-    config._d = new Date(parseFloat(input, 10) * 1000);
+    config._t = parseFloat(input, 10) * 1000;
 });
 addParseToken('x', function (input, array, config) {
-    config._d = new Date(toInt(input));
+    config._t = toInt(input);
 });

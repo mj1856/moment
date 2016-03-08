@@ -127,7 +127,10 @@ export function setMonth (mom, value) {
     }
 
     dayOfMonth = Math.min(mom.date(), daysInMonth(mom.year(), value));
-    mom._d['set' + (mom._isUTC ? 'UTC' : '') + 'Month'](value, dayOfMonth);
+
+    var d = new Date(mom._t);
+    d['set' + (mom._isUTC ? 'UTC' : '') + 'Month'](value, dayOfMonth); // TODO: calc without Date object
+    mom._t = d.valueOf();
     return mom;
 }
 

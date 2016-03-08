@@ -98,7 +98,7 @@ export function configFromString(config) {
     var matched = aspNetJsonRegex.exec(config._i);
 
     if (matched !== null) {
-        config._d = new Date(+matched[1]);
+        config._t = +matched[1];
         return;
     }
 
@@ -115,6 +115,6 @@ hooks.createFromInputFallback = deprecate(
     'release. Please refer to ' +
     'https://github.com/moment/moment/issues/1407 for more info.',
     function (config) {
-        config._d = new Date(config._i + (config._useUTC ? ' UTC' : ''));
+        config._t = new Date(config._i + (config._useUTC ? ' UTC' : '')).valueOf();
     }
 );

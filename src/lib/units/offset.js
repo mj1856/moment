@@ -63,7 +63,7 @@ export function cloneWithOffset(input, model) {
         res = model.clone();
         diff = (isMoment(input) || isDate(input) ? +input : +createLocal(input)) - (+res);
         // Use low-level api, because this fn is low-level api.
-        res._d.setTime(+res._d + diff);
+        res._t += diff;
         hooks.updateOffset(res, false);
         return res;
     } else {
@@ -74,7 +74,7 @@ export function cloneWithOffset(input, model) {
 function getDateOffset (m) {
     // On Firefox.24 Date#getTimezoneOffset returns a floating point.
     // https://github.com/moment/moment/pull/1871
-    return -Math.round(m._d.getTimezoneOffset() / 15) * 15;
+    return -Math.round(m.toDate().getTimezoneOffset() / 15) * 15;
 }
 
 // HOOKS

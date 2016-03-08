@@ -3,7 +3,7 @@ import { configFromArray } from './from-array';
 import map from '../utils/map';
 
 export function configFromObject(config) {
-    if (config._d) {
+    if (config._t) {
         return;
     }
 

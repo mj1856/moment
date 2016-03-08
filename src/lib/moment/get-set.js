@@ -16,12 +16,14 @@ export function makeGetSet (unit, keepTime) {
 
 export function get (mom, unit) {
     return mom.isValid() ?
-        mom._d['get' + (mom._isUTC ? 'UTC' : '') + unit]() : NaN;
+        (new Date(mom._t))['get' + (mom._isUTC ? 'UTC' : '') + unit]() : NaN; // TODO: calc without Date object
 }
 
 export function set (mom, unit, value) {
     if (mom.isValid()) {
-        mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value);
+        var d = new Date(mom._t);
+        d['set' + (mom._isUTC ? 'UTC' : '') + unit](value); // TODO: calc without Date object
+        mom._t = d.valueOf();
     }
 }
 

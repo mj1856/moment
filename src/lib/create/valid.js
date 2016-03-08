@@ -5,7 +5,7 @@ import getParsingFlags from '../create/parsing-flags';
 export function isValid(m) {
     if (m._isValid == null) {
         var flags = getParsingFlags(m);
-        m._isValid = !isNaN(m._d.getTime()) &&
+        m._isValid = !isNaN(m._t) &&
             flags.overflow < 0 &&
             !flags.empty &&
             !flags.invalidMonth &&

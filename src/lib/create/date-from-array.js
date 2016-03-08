@@ -19,3 +19,13 @@ export function createUTCDate (y) {
     }
     return date;
 }
+
+export function getTimestampFromLocalParts(y, m, d, h, mi, s, ms) {
+    // TODO: implement directly
+    return createDate(y, m, d, h, mi, s, ms).valueOf();
+}
+
+export function getTimestampFromUTCParts(y, m, d, h, mi, s, ms) {
+    // TODO: implement directly
+    return createUTCDate(y, m, d, h, mi, s, ms).valueOf();
+}

@@ -1,5 +1,5 @@
 import { hooks } from '../utils/hooks';
-import { createDate, createUTCDate } from './date-from-array';
+import { createDate, createUTCDate, getTimestampFromLocalParts, getTimestampFromUTCParts } from './date-from-array';
 import { daysInYear } from '../units/year';
 import { weekOfYear, weeksInYear, dayOfYearFromWeeks } from '../units/week-calendar-utils';
 import { YEAR, MONTH, DATE, HOUR, MINUTE, SECOND, MILLISECOND } from '../units/constants';
@@ -23,7 +23,7 @@ function currentDateArray(config) {
 export function configFromArray (config) {
     var i, date, input = [], currentDate, yearToUse;
 
-    if (config._d) {
+    if (config._t) {
         return;
     }
 
@@ -70,11 +70,12 @@ export function configFromArray (config) {
         config._a[HOUR] = 0;
     }
 
-    config._d = (config._useUTC ? createUTCDate : createDate).apply(null, input);
+    config._t = (config._useUTC ? getTimestampFromUTCParts : getTimestampFromLocalParts).apply(null, input);
+
     // Apply timezone offset from input. The actual utcOffset can be changed
     // with parseZone.
     if (config._tzm != null) {
-        config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
+        config._t -= config._tzm * 60000;
     }
 
     if (config._nextDay) {

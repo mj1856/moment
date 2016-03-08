@@ -46,13 +46,13 @@ export function prepareConfig (config) {
     } else if (format) {
         configFromStringAndFormat(config);
     } else if (isDate(input)) {
-        config._d = input;
+        config._t = input.valueOf();
     } else {
         configFromInput(config);
     }
 
     if (!isValid(config)) {
-        config._d = null;
+        config._t = NaN;
     }
 
     return config;
@@ -61,9 +61,9 @@ export function prepareConfig (config) {
 function configFromInput(config) {
     var input = config._i;
     if (input === undefined) {
-        config._d = new Date(hooks.now());
+        config._t = hooks.now();
     } else if (isDate(input)) {
-        config._d = new Date(+input);
+        config._t = input.valueOf();
     } else if (typeof input === 'string') {
         configFromString(config);
     } else if (isArray(input)) {
@@ -75,7 +75,7 @@ function configFromInput(config) {
         configFromObject(config);
     } else if (typeof(input) === 'number') {
         // from milliseconds
-        config._d = new Date(input);
+        config._t = +input;
     } else {
         hooks.createFromInputFallback(config);
     }
