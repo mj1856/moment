@@ -26,6 +26,25 @@ export function getTimestampFromLocalParts(y, m, d, h, mi, s, ms) {
 }
 
 export function getTimestampFromUTCParts(y, m, d, h, mi, s, ms) {
-    // TODO: implement directly
-    return createUTCDate(y, m, d, h, mi, s, ms).valueOf();
+    return parts2ts(y, m, d, h, mi, s, ms);
+}
+
+var d365 = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365];
+var d366 = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
+
+function parts2ts(year, month, day, hour, minute, second, millisecond) {
+    if (month < 0 || month > 11) {
+        return NaN;
+    }
+
+    var leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+    var days = leap ? d366 : d365;
+    if (day < 1 || day > days[month + 1] - days[month]) {
+        return NaN;
+    }
+
+    var y = year - 1;
+    var daysSinceEpoch = y * 365 + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) + days[month] + day - 719163;
+
+    return (daysSinceEpoch * 8640 * 10000) + (hour * 3600 * 1000) + (minute * 60000) + (second * 1000) + millisecond;
 }
