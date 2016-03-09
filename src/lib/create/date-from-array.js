@@ -21,7 +21,7 @@ export function createUTCDate (y) {
 }
 
 export function getTimestampFromLocalParts(y, m, d, h, mi, s, ms) {
-    // TODO: implement directly
+    // TODO: implement directly - will need to handle time zone, ambiguous and invalid, etc.
     return createDate(y, m, d, h, mi, s, ms).valueOf();
 }
 
