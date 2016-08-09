@@ -12,9 +12,10 @@ import isArray from '../utils/is-array';
 import indexOf from '../utils/index-of';
 import { createUTC } from '../create/utc';
 import getParsingFlags from '../create/parsing-flags';
+import { isLeapYear } from './year';
 
 export function daysInMonth(year, month) {
-    return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+    return month === 1 ? (isLeapYear(year) ? 29 : 28) : (31 - month % 7 % 2);
 }
 
 // FORMATTING
